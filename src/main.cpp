@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
     uint frameStart;
     uint frameTime;
-    if (theGame.init("foo", 50, 50, 640, 480, false))
+    if (theGame.init("We need a Villan", 50, 50, 640, 480, false))
     {
         while(theGame.isRunning())
         {
