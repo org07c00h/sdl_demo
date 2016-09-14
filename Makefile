@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-Wall -std=c++14 -lSDL2
-LDFLAGS=-lSDL2
+CFLAGS=-Wall -std=c++14
+LDFLAGS=-lSDL2 -lSDL2_image
 SOURCES=$(wildcard src/*.cpp)
 
 OBJECTS=$(addprefix obj/,$(notdir $(SOURCES:.cpp=.o)))

@@ -44,6 +44,29 @@ bool Game::init(const char* title, int x, int y, int width, int height,
         throw GameException("renderer init failed");
     }
 
+    if (IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG != IMG_INIT_PNG)
+    {
+        throw GameException(IMG_GetError());
+    }
+
+    SDL_Surface* image = IMG_Load("./data/1.png");
+    if (!image)
+    {
+        std::cout << "img load" << std::endl;
+    }
+    m_texture = SDL_CreateTextureFromSurface(m_renderer, image);
+    if (m_texture == NULL)
+    {
+        std::cout << "img load2" << std::endl;
+    }
+    SDL_FreeSurface(image);
+    SDL_SetRenderDrawColor(m_renderer, 155,155,155,255);
+    int w = 160;
+    int h = 128;
+    if (SDL_QueryTexture(m_texture, NULL, NULL, &w, &h) != 0)
+    {
+        std::cout << "Error" << std::endl;
+    }
     m_running = true;
 
     return true;
@@ -53,6 +76,9 @@ bool Game::init(const char* title, int x, int y, int width, int height,
 void Game::render()
 {
     SDL_RenderClear(m_renderer);
+    SDL_Rect texr;
+    texr.x = 100; texr.y = 50; texr.w = 160; texr.h = 128;
+    SDL_RenderCopy(m_renderer, m_texture, NULL, &texr);
 
     SDL_RenderPresent(m_renderer);
 }
