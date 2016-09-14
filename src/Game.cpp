@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.hpp"
+#include "GameException.hpp"
 
 Game* Game::m_instance = nullptr;
 
@@ -23,38 +24,26 @@ Game& Game::getInstance()
 bool Game::init(const char* title, int x, int y, int width, int height,
     bool fullscreen)
 {
-    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        std::cout << "SDL init successful" << std::endl;
-        int flags = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN;
+        throw GameException("SDL init failed");
+    }
 
-        m_window = SDL_CreateWindow(title, x, y, width, height, flags);
-        if (m_window != 0)
-        {
-            std::cout << "window created successful" << std::endl;
-            m_renderer = SDL_CreateRenderer(m_window, -1,
-                SDL_RENDERER_ACCELERATED);
-            if (m_renderer != 0)
-            {
-                std::cout << "renderer created successful" << std::endl;
-            }
-            else
-            {
-                std::cout << "renderer init failed" << std::endl;
-                return false;
-            }
-        }
-        else
-        {
-            std::cout << "window init failed" << std::endl;
-            return false;
-        }
-    }
-    else
+    std::cout << "SDL init successful" << std::endl;
+    int flags = fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN;
+
+    m_window = SDL_CreateWindow(title, x, y, width, height, flags);
+    if (m_window == NULL)
     {
-        std::cout << "SDL init failed" << std::endl;
-        return false;
+        throw GameException("window init failed");
     }
+    std::cout << "window created successful" << std::endl;
+    m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+    if (m_renderer == NULL)
+    {
+        throw GameException("renderer init failed");
+    }
+
     m_running = true;
 
     return true;
