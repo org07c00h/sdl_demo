@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "TextureManager.hpp"
+#include "Player.hpp"
 
 class Game
 {
@@ -22,6 +23,10 @@ private:
     Game();
     ~Game();
 
+    void loadTextures();
+    void initGameObject();
+
+    Player* m_player;
     bool m_running;
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;

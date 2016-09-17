@@ -40,6 +40,13 @@ void TextureManager::load(std::string fileName, std::string id)
     SDL_FreeSurface(image);
 }
 
+void TextureManager::draw(std::string id, SDL_Rect* srcRect, SDL_Rect* destRect,
+    SDL_RendererFlip flip)
+{
+    SDL_RenderCopyEx(theGame.getRenderer(), m_textureMap[id], srcRect,
+        destRect, 0, 0, flip);
+}
+
 void TextureManager::draw(std::string id, int x, int y, int width, int height,
     SDL_RendererFlip flip)
 {
@@ -54,5 +61,6 @@ void TextureManager::draw(std::string id, int x, int y, int width, int height,
     destRect.x = x;
     destRect.y = y;
 
-    SDL_RenderCopyEx(theGame.getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+    SDL_RenderCopyEx(theGame.getRenderer(), m_textureMap[id], &srcRect,
+        &destRect, 0, 0, flip);
 }

@@ -50,7 +50,8 @@ bool Game::init(const char* title, int x, int y, int width, int height,
         throw GameException(IMG_GetError());
     }
 
-    theTextureManager.load("./data/1.png", "icons");
+    loadTextures();
+    initGameObject();
 
     m_running = true;
 
@@ -63,6 +64,7 @@ void Game::render()
     SDL_RenderClear(m_renderer);
 
     theTextureManager.draw("icons", 20, 30, 60, 128);
+    m_player->draw();
 
     SDL_RenderPresent(m_renderer);
 }
@@ -75,6 +77,18 @@ void Game::handleEvents()
         switch (event.type) {
             case SDL_QUIT:
                 m_running = false;
+            break;
+
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym) {
+                    case SDLK_SPACE:
+                        m_player->startAnimation();
+                    break;
+
+                    default:
+                    break;
+                }
+
             break;
 
             default:
@@ -94,7 +108,7 @@ void Game::clean()
 
 void Game::update()
 {
-
+    m_player->update();
 }
 
 bool Game::isRunning()
@@ -105,4 +119,15 @@ bool Game::isRunning()
 SDL_Renderer* Game::getRenderer()
 {
     return m_renderer;
+}
+
+void Game::loadTextures()
+{
+    theTextureManager.load("./data/1.png", "icons");
+    theTextureManager.load("./data/something.png", "magic");
+}
+
+void Game::initGameObject()
+{
+    m_player = new Player(20, 200);
 }
