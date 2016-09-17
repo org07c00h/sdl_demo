@@ -8,9 +8,9 @@ class TextureManager
 {
 public:
     static TextureManager& getInstance();
-    void load(std::string fileName, std::string id, SDL_Renderer* renderer);
+    void load(std::string fileName, std::string id);
     void draw(std::string id, int x, int y, int width, int height,
-        SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+        SDL_RendererFlip flip = SDL_FLIP_NONE);
 private:
     TextureManager();
     ~TextureManager();

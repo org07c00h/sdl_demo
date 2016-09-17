@@ -50,7 +50,7 @@ bool Game::init(const char* title, int x, int y, int width, int height,
         throw GameException(IMG_GetError());
     }
 
-    theTextureManager.load("./data/1.png", "icons", m_renderer);
+    theTextureManager.load("./data/1.png", "icons");
 
     m_running = true;
 
@@ -62,7 +62,7 @@ void Game::render()
 {
     SDL_RenderClear(m_renderer);
 
-    theTextureManager.draw("icons", 20, 30, 60, 128, m_renderer);
+    theTextureManager.draw("icons", 20, 30, 60, 128);
 
     SDL_RenderPresent(m_renderer);
 }
@@ -100,4 +100,9 @@ void Game::update()
 bool Game::isRunning()
 {
     return m_running;
+}
+
+SDL_Renderer* Game::getRenderer()
+{
+    return m_renderer;
 }

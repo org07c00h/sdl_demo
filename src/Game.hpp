@@ -17,6 +17,7 @@ public:
 
     bool isRunning();
     static Game& getInstance();
+    SDL_Renderer* getRenderer();
 private:
     Game();
     ~Game();
