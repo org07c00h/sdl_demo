@@ -1,6 +1,7 @@
 #include "Player.hpp"
-
-Player::Player(int x, int  y)
+#include <iostream>
+ActionMap<int> Player::playerInputs;
+Player::Player(int x, int  y) : ActionTarget(playerInputs)
 {
     m_x = x;
     m_y = y;
@@ -19,6 +20,14 @@ Player::Player(int x, int  y)
     mCurrentAnimation = 0;
 
     start = false;
+    SDL_KeyboardEvent key;
+    //key.t
+    key.keysym.sym = SDLK_DOWN;
+    key.keysym.scancode = SDL_SCANCODE_DOWN;
+    bind(Action(key), [this](const SDL_Event& event) {
+        std::cout << "HELLO" << std::endl;
+        start = !start;
+    });
 }
 
 
@@ -45,6 +54,7 @@ void Player::update()
             m_srcRect.x = 16 * (mCurrentAnimation + 1);
         }
     }
+    ActionTarget::processEvents();
 }
 
 void Player::startAnimation()
